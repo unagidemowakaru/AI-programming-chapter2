@@ -33,12 +33,6 @@ EOF
 # phpのための準備
 RUN mkdir -p /run/php-fpm && \
     chown apache:apache /run/php-fpm
-## 2章のサンプルを作る場所を準備
-#ARG CHAPTER2SAMPLES=${WORKHTML}/chapter2/samples
-#ARG CHAPTER2PRACTICES=${WORKHTML}/chapter2/practices
-#RUN mkdir -p ${CHAPTER2SAMPLES} && \
-#    mkdir -p ${CHAPTER2PRACTICES} && \
-#    chown apache:apache ${CHAPTER2SAMPLES} ${CHAPTER2PRACTICES}
 
 USER ${USERNAME}
 WORKDIR ${WORKSPACE}
