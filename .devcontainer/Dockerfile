@@ -4,12 +4,13 @@ FROM almalinux:10
 # 基本コマンドのインストール（分割して実行することで負荷を抑える）
 RUN dnf -y install git git-lfs sudo tar wget && \
     dnf -y install httpd && \
+    dnf -y install php php-fpm php-gd php-json php-mbstring && \
     dnf clean all
 
 
 # ユーザーの作成と sudo 権限の付与
 ARG USERNAME=codespace
-ARG WORKSPACE=/workspaces/AI-programming-web
+ARG WORKSPACE=/workspaces/AI-programming-chapter2
 RUN useradd -m ${USERNAME} && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} && \
     chmod 0400 /etc/sudoers.d/${USERNAME} && \
@@ -28,6 +29,10 @@ RUN rmdir ${DOCUMENTROOT} && \
     Require all granted
 </Directory>
 EOF
+
+# phpのための準備
+RUN mkdir -p /run/php-fpm && \
+    chown apache:apache /run/php-fpm
 
 USER ${USERNAME}
 WORKDIR ${WORKSPACE}
